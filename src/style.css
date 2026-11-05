@@ -31,7 +31,9 @@ body {
   outline-offset: 3px;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   text-wrap: balance;
 }
 
@@ -49,6 +51,13 @@ h1, h2, h3 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .btn, .btn:hover, .btn:active { transition: none; transform: none; }
+  html {
+    scroll-behavior: auto;
+  }
+  .btn,
+  .btn:hover,
+  .btn:active {
+    transition: none;
+    transform: none;
+  }
 }

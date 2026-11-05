@@ -17,10 +17,10 @@ Then open the URL Vite prints, usually http://localhost:5173.
 
 All content lives in two files, so you never need to touch the components to update the site:
 
-| File | What's in it |
-| --- | --- |
-| `src/data/profile.js` | Name, tagline, about text, skills, experience, education, email and links |
-| `src/data/projects.js` | Every project card, in display order |
+| File                   | What's in it                                                              |
+| ---------------------- | ------------------------------------------------------------------------- |
+| `src/data/profile.js`  | Name, tagline, about text, skills, experience, education, email and links |
+| `src/data/projects.js` | Every project card, in display order                                      |
 
 Search the project for `TODO` to find everything that still needs filling in.
 

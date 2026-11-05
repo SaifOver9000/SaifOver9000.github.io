@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+/* Design tokens: cobalt, hot pink, lemon and mint blocks on a pale lilac page, outlined in ink with hard offset shadows. */
+@theme {
+  --color-ink: #0e0e2c;
+  --color-paper: #f3efff;
+  --color-cobalt: #2340ff;
+  --color-pink: #ff4fa3;
+  --color-lemon: #ffe14d;
+  --color-mint: #3ee0a8;
+
+  --font-display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --font-sans: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  --shadow-hard: 6px 6px 0 0 var(--color-ink);
+  --shadow-hard-sm: 3px 3px 0 0 var(--color-ink);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  @apply bg-paper text-ink font-sans antialiased;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-pink);
+  outline-offset: 3px;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+/* Chunky pressable button used across the site */
+.btn {
+  @apply inline-flex items-center gap-2 rounded-xl border-[3px] border-ink px-5 py-3 font-semibold text-ink shadow-hard transition-transform duration-150;
+}
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 0 var(--color-ink);
+}
+.btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 3px 3px 0 0 var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn, .btn:hover, .btn:active { transition: none; transform: none; }
+}

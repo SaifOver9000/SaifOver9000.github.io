@@ -22,7 +22,6 @@ export const projects = [
     status: "in-progress",
     statusNote: "Live by Nov 30",
     accent: "pink",
-    featured: true,
     links: { live: "", code: "", caseStudy: "" }, // TODO: add as soon as you deploy
   },
   {
@@ -58,6 +57,7 @@ export const projects = [
     stack: [
       "Python, scikit-learn, NumPy, pandas, Matplotlib, FastAPI, REST, JavaScript, React, Vite, HTML/CSS, Vitest",
     ],
+    status: "live",
     statusNote: "Capstone",
     accent: "mint",
     featured: true,

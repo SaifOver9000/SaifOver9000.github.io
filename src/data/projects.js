@@ -39,7 +39,7 @@ export const projects = [
     statusNote: "Guided through Boot.dev",
     accent: "mint",
     links: {
-      live: "Can work Locally",
+      live: "",
       code: "https://github.com/SaifOver9000/Python-Coding-Agent-Gemini-API",
     }, // TODO: add the GitHub repo
   },
@@ -62,7 +62,7 @@ export const projects = [
     accent: "mint",
     featured: true,
     links: {
-      live: "Can work Locally",
+      live: "",
       code: "https://github.com/SaifOver9000/AI-based-tool-for-real-time-peptide-cytotoxicity-prediction",
     },
   },

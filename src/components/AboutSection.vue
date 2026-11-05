@@ -9,14 +9,9 @@ const chipColors = ["bg-lemon", "bg-mint", "bg-pink"];
 <template>
   <section id="about" class="border-y-[3px] border-ink bg-white">
     <div
-      class="mx-auto grid max-w-6xl gap-12 px-5 py-20 lg:grid-cols-[1.2fr_1fr]"
+      class="mx-auto grid max-w-6xl gap-1 px-5 py-20 lg:grid-cols-[1.2fr_1fr]"
     >
       <div>
-        <p
-          class="font-mono text-sm font-semibold uppercase tracking-widest text-cobalt"
-        >
-          About me
-        </p>
         <h2 class="mt-2 font-display text-4xl font-extrabold sm:text-5xl">
           A bit about me
         </h2>

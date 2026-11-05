@@ -49,12 +49,20 @@ export const profile = {
     // TODO: add or remove anything here
     {
       group: "AI & ML",
-      items: ["TensorFlow", "PyTorch", "scikit-learn", "Natural Language Processing"],
+      items: [
+        "TensorFlow",
+        "PyTorch",
+        "scikit-learn",
+        "Natural Language Processing",
+      ],
     },
     {
       group: "Community & Leadership",
-      items:["President of the Computer Science Society at Acadia University", "Organized hackathons and coding workshops"],
-    }
+      items: [
+        "President of the Computer Science Society at Acadia University",
+        "Organized hackathons and coding workshops",
+      ],
+    },
   ],
 
   // Entries with draft: true are hidden until you fill them in and remove the flag.
@@ -70,7 +78,8 @@ export const profile = {
       role: "Capstone Project", // TODO
       org: "University, Program", // TODO
       period: "2026", // TODO
-      summary: "Engineered a machine learning system to predict peptide cytotoxicity (%) on breast cancer cells using an MLP regressor trained on 319 peptide sequences, achieving a mean R² of 0.51 (±0.10) via 10-fold cross-validation. Built a 38-dimensional feature engineering pipeline, with a FastAPI backend serving real-time predictions through a web interface.",
+      summary:
+        "Engineered a machine learning system to predict peptide cytotoxicity (%) on breast cancer cells using an MLP regressor trained on 319 peptide sequences, achieving a mean R² of 0.51 (±0.10) via 10-fold cross-validation. Built a 38-dimensional feature engineering pipeline, with a FastAPI backend serving real-time predictions through a web interface.",
       draft: true,
     },
   ],

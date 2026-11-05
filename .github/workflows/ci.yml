@@ -72,13 +72,14 @@ jobs:
       - name: Build site
         run: npm run build
 
-      - uses: actions/upload-artifact@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
         with:
-          name: build
           path: dist
 
   deploy:
-    needs: build
+    name: Deploy
+    needs: [tests, style, build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     environment:
@@ -86,4 +87,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4

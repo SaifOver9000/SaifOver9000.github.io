@@ -37,9 +37,24 @@ export const projects = [
     ],
     stack: ["Python", "Gemini API", "Function calling", "unittest"],
     status: "coursework",
-    statusNote: "Built through Boot.dev", // TODO: confirm or change
+    statusNote: "Guided through Boot.dev", 
     accent: "mint",
-    links: { live: "", code: "" }, // TODO: add the GitHub repo
+    links: { live: "Can work Locally", code: "https://github.com/SaifOver9000/Python-Coding-Agent-Gemini-API" }, // TODO: add the GitHub repo
+  },
+  {
+    title: "AI-based-tool-for-real-time-peptide-cytotoxicity-prediction",
+    kicker: "ML · Python · Research · Bioinformatics · Peptide Cytotoxicity Prediction ",
+    summary:"a machine learning system that predicts the cytotoxicity of anticancer peptides, i.e. the percentage of cancer cells killed, for breast cancer. A researcher enters a 14-amino-acid peptide sequence and gets back a predicted cytotoxicity value plus a breakdown of the sequence’s composition, net charge, average hydrophobicity, and longest hydrophobic patch.",
+    highlights: ["Engineered a custom 38-dimensional peptide representation",
+      "Developed a comprehensive feature extraction pipeline for peptide sequences",
+      "Implemented a user-friendly web interface for real-time predictions",
+    ],
+    stack: ["Python, scikit-learn, NumPy, pandas, Matplotlib, FastAPI, REST, JavaScript, React, Vite, HTML/CSS, Vitest"],
+    statusNote: "Capstone",
+    accent: "mint",
+    featured: true,
+    links: {live: "Can work Locally", code: "https://github.com/SaifOver9000/AI-based-tool-for-real-time-peptide-cytotoxicity-prediction" },
+
   },
   {
     title: "Toronto Suite Directory",
@@ -53,9 +68,10 @@ export const projects = [
     ],
     stack: ["Vue 3", "Vite", "Tailwind CSS v4", "Netlify"],
     status: "live",
-    statusNote: "Deployed",
+    statusNote: "Not yet deployed",
     accent: "lemon",
-    links: { live: "", code: "" }, // TODO: add the Netlify URL and repo
+    draft: true,
+    links: { live: "Not yet deployed", code: "Private" }, // TODO: add the Netlify URL and repo
   },
   {
     title: "This Portfolio",
@@ -71,6 +87,6 @@ export const projects = [
     status: "live",
     statusNote: "You are here",
     accent: "cobalt",
-    links: { live: "", code: "" }, // TODO: add the repo link
+    links: { live: "", code: "https://github.com/SaifOver9000/saif-portfolio" }, // TODO: add the repo link
   },
 ];

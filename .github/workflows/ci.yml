@@ -72,7 +72,7 @@ jobs:
       - name: Build site
         run: npm run build
       
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v5
         with:
           name: build
           path: dist

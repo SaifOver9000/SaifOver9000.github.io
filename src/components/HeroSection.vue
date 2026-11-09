@@ -1,7 +1,10 @@
 <script setup>
+import { ref } from "vue";
 import { profile } from "../data/profile.js";
 
 const profileImage = `${import.meta.env.BASE_URL}Profile.JPG`;
+// Like an instant photo: starts dark, slowly develops once clicked.
+const developing = ref(false);
 </script>
 
 <template>
@@ -71,13 +74,35 @@ const profileImage = `${import.meta.env.BASE_URL}Profile.JPG`;
         >
           <span class="tape -top-3 -left-5 -rotate-[30deg]"></span>
           <span class="tape -right-5 -top-3 rotate-[30deg]"></span>
-          <img
-            :src="profileImage"
-            :alt="`${profile.name} speaking at a podium with a microphone`"
-            class="aspect-[4/3] w-full object-cover object-[50%_35%]"
-            fetchpriority="high"
-            decoding="async"
-          />
+          <button
+            type="button"
+            class="relative block aspect-[4/3] w-full overflow-hidden bg-pencil focus-visible:outline-offset-4"
+            :class="developing ? 'cursor-default' : 'cursor-pointer'"
+            :aria-label="developing ? undefined : 'Develop photo'"
+            :aria-disabled="developing"
+            @click="developing = true"
+          >
+            <img
+              :src="profileImage"
+              :alt="`${profile.name} speaking at a podium with a microphone`"
+              class="polaroid-photo h-full w-full object-cover object-[50%_35%]"
+              :class="{ 'is-developing': developing }"
+              fetchpriority="high"
+              decoding="async"
+            />
+            <span
+              class="absolute inset-0 flex flex-col items-center justify-center gap-1 text-sheet transition-opacity duration-700"
+              :class="developing ? 'opacity-0' : 'opacity-100'"
+              aria-hidden="true"
+            >
+              <span class="font-scribble text-2xl font-bold"
+                >click to develop</span
+              >
+              <span class="font-hand text-lg opacity-70"
+                >(give it a few seconds)</span
+              >
+            </span>
+          </button>
           <figcaption class="pt-2 text-center font-scribble text-xl">
             that's me!
           </figcaption>

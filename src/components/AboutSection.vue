@@ -4,6 +4,7 @@ import { profile } from "../data/profile.js";
 
 const experience = computed(() => profile.experience.filter((e) => !e.draft));
 const chipColors = ["bg-lemon", "bg-mint", "bg-pink"];
+const profileImage = `${import.meta.env.BASE_URL}Profile.JPG`;
 </script>
 
 <template>
@@ -55,6 +56,20 @@ const chipColors = ["bg-lemon", "bg-mint", "bg-pink"];
       </div>
 
       <div class="space-y-6">
+        <figure
+          class="mx-auto max-w-md -rotate-1 rounded-sm border-[3px] border-ink bg-lemon p-3 shadow-hard transition-transform duration-200 hover:rotate-0 sm:p-4"
+        >
+          <div class="border-2 border-ink bg-white p-3 sm:p-4">
+            <img
+              :src="profileImage"
+              alt="Saif speaking at a podium with a microphone"
+              class="aspect-[4/3] w-full border-2 border-ink object-cover object-[50%_35%]"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </figure>
+
         <h3 class="font-display text-xl font-extrabold">What I work with</h3>
         <div
           v-for="(group, i) in profile.skills"

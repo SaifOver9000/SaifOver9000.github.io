@@ -1,5 +1,7 @@
 <script setup>
 import { profile } from "../data/profile.js";
+
+const profileImage = `${import.meta.env.BASE_URL}Profile.JPG`;
 </script>
 
 <template>
@@ -50,33 +52,49 @@ import { profile } from "../data/profile.js";
         </div>
       </div>
 
-      <a
-        v-if="profile.currentlyBuilding"
-        :href="profile.currentlyBuilding.href"
-        class="group block -rotate-2 rounded-2xl border-[3px] border-ink bg-lemon p-6 text-ink shadow-hard transition-transform hover:rotate-0 motion-reduce:transition-none"
-      >
-        <span
-          class="inline-flex items-center gap-2 rounded-full border-2 border-ink bg-white px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wider"
+      <div class="space-y-8">
+        <figure
+          class="mx-auto max-w-md rotate-2 rounded-sm border-[3px] border-ink bg-pink p-3 shadow-hard transition-transform duration-200 hover:rotate-0 motion-reduce:transition-none sm:p-4"
+        >
+          <div class="border-2 border-ink bg-white p-3 sm:p-4">
+            <img
+              :src="profileImage"
+              :alt="`${profile.name} speaking at a podium with a microphone`"
+              class="aspect-[4/3] w-full border-2 border-ink object-cover object-[50%_35%]"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </div>
+        </figure>
+
+        <a
+          v-if="profile.currentlyBuilding"
+          :href="profile.currentlyBuilding.href"
+          class="group block -rotate-2 rounded-2xl border-[3px] border-ink bg-lemon p-6 text-ink shadow-hard transition-transform hover:rotate-0 motion-reduce:transition-none"
         >
           <span
-            class="h-2.5 w-2.5 animate-pulse rounded-full bg-pink motion-reduce:animate-none"
-          ></span>
-          Currently building
-        </span>
-        <h2 class="mt-4 font-display text-2xl font-extrabold">
-          {{ profile.currentlyBuilding.title }}
-        </h2>
-        <p class="mt-2 leading-relaxed">
-          {{ profile.currentlyBuilding.blurb }}
-        </p>
-        <p class="mt-4 font-mono text-sm font-semibold">
-          {{ profile.currentlyBuilding.target }}
-          <span
-            class="inline-block transition-transform group-hover:translate-x-1"
-            >→</span
+            class="inline-flex items-center gap-2 rounded-full border-2 border-ink bg-white px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wider"
           >
-        </p>
-      </a>
+            <span
+              class="h-2.5 w-2.5 animate-pulse rounded-full bg-pink motion-reduce:animate-none"
+            ></span>
+            Currently building
+          </span>
+          <h2 class="mt-4 font-display text-2xl font-extrabold">
+            {{ profile.currentlyBuilding.title }}
+          </h2>
+          <p class="mt-2 leading-relaxed">
+            {{ profile.currentlyBuilding.blurb }}
+          </p>
+          <p class="mt-4 font-mono text-sm font-semibold">
+            {{ profile.currentlyBuilding.target }}
+            <span
+              class="inline-block transition-transform group-hover:translate-x-1"
+              >→</span
+            >
+          </p>
+        </a>
+      </div>
     </div>
   </section>
 </template>

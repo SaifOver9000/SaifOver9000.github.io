@@ -11,16 +11,20 @@ const nav = [
 </script>
 
 <template>
+  <!-- A strip of kraft paper taped across the top of the page -->
   <header
-    class="sticky top-0 z-40 border-b-[3px] border-ink bg-paper/95 backdrop-blur"
+    class="sticky top-0 z-40 border-b-2 border-dashed border-pencil/30 bg-kraft/95 backdrop-blur"
   >
-    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
+    <div
+      class="mx-auto flex max-w-6xl items-center justify-between px-5 py-2.5"
+    >
       <a
         href="#top"
-        class="flex items-center gap-2 font-display text-lg font-extrabold"
+        class="group flex items-center gap-3 font-scribble text-2xl font-bold"
       >
         <span
-          class="grid h-9 w-9 place-items-center rounded-lg border-[3px] border-ink bg-lemon shadow-hard-sm"
+          class="scrap grid h-9 w-9 -rotate-6 place-items-center bg-lemon font-scribble text-xl font-bold group-hover:rotate-0"
+          aria-hidden="true"
           >S</span
         >
         {{ profile.name }}
@@ -31,7 +35,7 @@ const nav = [
           v-for="item in nav"
           :key="item.href"
           :href="item.href"
-          class="rounded-lg px-3 py-2 font-semibold hover:bg-lemon"
+          class="px-3 py-1 font-hand text-xl decoration-pink decoration-wavy underline-offset-4 hover:underline"
           >{{ item.label }}</a
         >
         <a
@@ -39,13 +43,13 @@ const nav = [
           :href="profile.links.resume"
           target="_blank"
           rel="noopener"
-          class="btn ml-2 bg-pink px-4 py-2 text-sm shadow-hard-sm"
+          class="paper-btn ml-2 rotate-1 bg-white px-4 py-1 text-lg"
           >Résumé</a
         >
       </nav>
 
       <button
-        class="rounded-lg border-[3px] border-ink bg-lemon px-3 py-1.5 font-semibold sm:hidden"
+        class="paper-btn -rotate-1 bg-lemon px-4 py-1 text-lg sm:hidden"
         :aria-expanded="open"
         aria-controls="mobile-nav"
         @click="open = !open"
@@ -54,17 +58,18 @@ const nav = [
       </button>
     </div>
 
+    <!-- Dropdown on a sheet of notebook paper -->
     <nav
       v-if="open"
       id="mobile-nav"
-      class="border-t-[3px] border-ink sm:hidden"
+      class="lined border-t-2 border-dashed border-pencil/30 pb-2 pt-1 sm:hidden"
       aria-label="Mobile"
     >
       <a
         v-for="item in nav"
         :key="item.href"
         :href="item.href"
-        class="block border-b-2 border-ink/10 px-5 py-3 font-semibold"
+        class="block py-1 pl-14 pr-5 font-hand text-xl leading-8"
         @click="open = false"
         >{{ item.label }}</a
       >
@@ -73,7 +78,7 @@ const nav = [
         :href="profile.links.resume"
         target="_blank"
         rel="noopener"
-        class="block px-5 py-3 font-semibold text-pink"
+        class="block py-1 pl-14 pr-5 font-hand text-xl leading-8 underline decoration-pink decoration-wavy underline-offset-4"
         >Résumé</a
       >
     </nav>

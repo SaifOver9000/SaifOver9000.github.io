@@ -1,92 +1,135 @@
 <script setup>
+import { ref } from "vue";
 import { profile } from "../data/profile.js";
 
 const profileImage = `${import.meta.env.BASE_URL}Profile.JPG`;
+// Like an instant photo: starts dark, slowly develops once clicked.
+const developing = ref(false);
 </script>
 
 <template>
   <section
     id="top"
-    class="relative overflow-hidden border-b-[3px] border-ink bg-cobalt text-white"
+    class="paper-sheet relative overflow-hidden border-b-2 border-dashed border-pencil/25"
   >
-    <!-- decorative shapes -->
     <div
-      aria-hidden="true"
-      class="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full border-[3px] border-ink bg-pink"
-    ></div>
-    <div
-      aria-hidden="true"
-      class="pointer-events-none absolute -bottom-10 left-[38%] h-24 w-24 rotate-12 rounded-2xl border-[3px] border-ink bg-mint"
-    ></div>
-
-    <div
-      class="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 sm:py-24 lg:grid-cols-[1.5fr_1fr]"
+      class="relative mx-auto grid max-w-6xl items-start gap-12 px-5 py-16 sm:py-24 lg:grid-cols-[1.4fr_1fr]"
     >
-      <div>
-        <p
-          class="font-mono text-sm font-semibold uppercase tracking-widest text-lemon"
-        >
-          {{ profile.role }} · {{ profile.location }}
-        </p>
-        <h1
-          class="mt-5 font-display text-5xl font-extrabold leading-[0.95] sm:text-7xl lg:text-8xl"
-        >
-          Hi, I'm <span class="text-lemon">{{ profile.name }}.</span>
-        </h1>
-        <p
-          class="mt-6 max-w-xl text-lg leading-relaxed text-white/90 sm:text-xl"
-        >
-          {{ profile.tagline }}
-        </p>
-        <div class="mt-8 flex flex-wrap gap-4">
-          <a href="#projects" class="btn bg-lemon">See my projects</a>
-          <a href="#contact" class="btn bg-white">Get in touch</a>
+      <!-- Left: the words, cut out and pasted down -->
+      <div class="space-y-8">
+        <!-- Little kraft-paper label -->
+        <div class="scrap inline-block -rotate-2">
+          <span class="tape tape-mint -left-6 top-1 w-16 -rotate-12"></span>
+          <p
+            class="scrap-paper torn-b bg-kraft px-5 py-2 font-hand text-lg tracking-wide"
+          >
+            {{ profile.role }} · {{ profile.location }}
+          </p>
+        </div>
+
+        <!-- Headline on a torn strip of white paper -->
+        <div class="scrap rotate-1 hover:rotate-0">
+          <span class="tape -top-3 left-8 -rotate-6"></span>
+          <span class="tape tape-pink -top-2 right-10 rotate-3"></span>
+          <h1
+            class="scrap-paper torn-a px-6 pb-6 pt-8 font-scribble text-6xl font-bold leading-[1] sm:px-10 sm:text-7xl lg:text-8xl"
+          >
+            Hi, I'm <span class="highlight">{{ profile.name }}.</span>
+          </h1>
+        </div>
+
+        <!-- Tagline on a scrap of notebook paper -->
+        <div class="scrap max-w-xl -rotate-1 hover:rotate-0 sm:ml-8">
+          <span class="tape -top-3 left-1/2 -translate-x-1/2 rotate-2"></span>
+          <p
+            class="scrap-paper lined torn-b py-6 pl-14 pr-6 font-hand text-xl leading-8 sm:text-2xl"
+          >
+            {{ profile.tagline }}
+          </p>
+        </div>
+
+        <!-- Buttons as hand-cut paper tags -->
+        <div class="flex flex-wrap gap-4 pt-2">
+          <a href="#projects" class="paper-btn -rotate-2 bg-lemon"
+            >See my projects →</a
+          >
+          <a href="#contact" class="paper-btn rotate-1 bg-white"
+            >Get in touch</a
+          >
           <a
             v-if="profile.links.github"
             :href="profile.links.github"
             target="_blank"
             rel="noopener"
-            class="btn bg-mint"
+            class="paper-btn -rotate-1 bg-mint/70"
             >GitHub</a
           >
         </div>
       </div>
 
-      <div class="space-y-8">
+      <!-- Right: photo and sticky note -->
+      <div class="space-y-12">
         <figure
-          class="mx-auto max-w-md rotate-2 rounded-sm border-[3px] border-ink bg-pink p-3 shadow-hard transition-transform duration-200 hover:rotate-0 motion-reduce:transition-none sm:p-4"
+          class="scrap mx-auto max-w-md rotate-3 bg-white p-3 pb-2 hover:rotate-1 sm:p-4 sm:pb-3"
         >
-          <div class="border-2 border-ink bg-white p-3 sm:p-4">
+          <span class="tape -top-3 -left-5 -rotate-[30deg]"></span>
+          <span class="tape -right-5 -top-3 rotate-[30deg]"></span>
+          <button
+            type="button"
+            class="relative block aspect-[4/3] w-full overflow-hidden bg-pencil focus-visible:outline-offset-4"
+            :class="developing ? 'cursor-default' : 'cursor-pointer'"
+            :aria-label="developing ? undefined : 'Develop photo'"
+            :aria-disabled="developing"
+            @click="developing = true"
+          >
             <img
               :src="profileImage"
               :alt="`${profile.name} speaking at a podium with a microphone`"
-              class="aspect-[4/3] w-full border-2 border-ink object-cover object-[50%_35%]"
+              class="polaroid-photo h-full w-full object-cover object-[50%_35%]"
+              :class="{ 'is-developing': developing }"
               fetchpriority="high"
               decoding="async"
             />
-          </div>
+            <span
+              class="absolute inset-0 flex flex-col items-center justify-center gap-1 text-sheet transition-opacity duration-700"
+              :class="developing ? 'opacity-0' : 'opacity-100'"
+              aria-hidden="true"
+            >
+              <span class="font-scribble text-2xl font-bold"
+                >click to develop</span
+              >
+              <span class="font-hand text-lg opacity-70"
+                >(give it a few seconds)</span
+              >
+            </span>
+          </button>
+          <figcaption class="pt-2 text-center font-scribble text-xl">
+            that's me!
+          </figcaption>
         </figure>
 
+        <!-- "Currently building" as a sticky note -->
         <a
           v-if="profile.currentlyBuilding"
           :href="profile.currentlyBuilding.href"
-          class="group block -rotate-2 rounded-2xl border-[3px] border-ink bg-lemon p-6 text-ink shadow-hard transition-transform hover:rotate-0 motion-reduce:transition-none"
+          class="scrap group mx-auto block max-w-sm -rotate-2 bg-lemon p-6 hover:rotate-0"
         >
           <span
-            class="inline-flex items-center gap-2 rounded-full border-2 border-ink bg-white px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wider"
-          >
+            class="tape tape-pink -top-3 left-1/2 -translate-x-1/2 -rotate-3"
+          ></span>
+          <p class="font-hand text-sm uppercase tracking-widest">
             <span
-              class="h-2.5 w-2.5 animate-pulse rounded-full bg-pink motion-reduce:animate-none"
+              class="mr-1 inline-block h-2.5 w-2.5 animate-pulse rounded-full bg-pink motion-reduce:animate-none"
             ></span>
             Currently building
-          </span>
-          <h2 class="mt-4 font-display text-2xl font-extrabold">
+          </p>
+          <h2 class="mt-3 font-scribble text-2xl font-bold">
             {{ profile.currentlyBuilding.title }}
           </h2>
-          <p class="mt-2 leading-relaxed">
+          <p class="mt-2 font-hand text-lg leading-snug">
             {{ profile.currentlyBuilding.blurb }}
           </p>
-          <p class="mt-4 font-mono text-sm font-semibold">
+          <p class="mt-4 font-hand text-lg underline decoration-wavy">
             {{ profile.currentlyBuilding.target }}
             <span
               class="inline-block transition-transform group-hover:translate-x-1"

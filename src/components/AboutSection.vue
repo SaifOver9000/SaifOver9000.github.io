@@ -1,94 +1,152 @@
 <script setup>
 import { computed } from "vue";
 import { profile } from "../data/profile.js";
+import SectionHeading from "./SectionHeading.vue";
 
 const experience = computed(() => profile.experience.filter((e) => !e.draft));
-const chipColors = ["bg-lemon", "bg-mint", "bg-pink"];
+// Skill groups are sticky notes in rotating colours
+const noteColors = [
+  "bg-lemon",
+  "bg-mint/70",
+  "bg-pink/45",
+  "bg-white",
+  "bg-kraft/70",
+];
 const aboutImage = `${import.meta.env.BASE_URL}Picture.jpg`;
 </script>
 
 <template>
-  <section id="about" class="border-y-[3px] border-ink bg-white">
+  <section id="about" class="border-b-2 border-dashed border-pencil/25">
     <div
-      class="mx-auto grid max-w-6xl gap-1 px-5 py-20 lg:grid-cols-[1.2fr_1fr]"
+      class="mx-auto grid max-w-6xl gap-14 px-5 py-20 lg:grid-cols-[1.2fr_1fr]"
     >
-      <div>
-        <h2 class="mt-2 font-display text-4xl font-extrabold sm:text-5xl">
-          A bit about me
-        </h2>
-        <div class="mt-6 max-w-[62ch] space-y-4 text-lg leading-relaxed">
-          <p v-for="para in profile.about" :key="para">{{ para }}</p>
+      <div class="space-y-10">
+        <SectionHeading
+          kicker="About"
+          title="A bit about me"
+          tape="tape-mint"
+        />
+
+        <!-- The story, written out on notebook paper -->
+        <div class="scrap -rotate-[0.6deg] hover:rotate-0">
+          <span class="tape -top-3 left-10 -rotate-6"></span>
+          <span class="tape tape-pink -top-3 right-12 rotate-6"></span>
+          <div
+            class="scrap-paper lined torn-a pb-8 pl-14 pr-6 pt-6 font-hand text-xl leading-8"
+          >
+            <p
+              v-for="para in profile.about"
+              :key="para"
+              class="mt-8 first:mt-0"
+            >
+              {{ para }}
+            </p>
+          </div>
         </div>
 
         <div
           v-if="experience.length || !profile.education.draft"
-          class="mt-10 space-y-4"
+          class="space-y-6"
         >
-          <h3 class="font-display text-xl font-extrabold">
-            Experience & education
+          <h3 class="font-scribble text-3xl font-bold">
+            <span class="highlight">Experience & education</span>
           </h3>
-          <ol class="space-y-4">
+          <ol class="space-y-6">
             <li
-              v-for="item in experience"
+              v-for="(item, i) in experience"
               :key="item.role + item.org"
-              class="rounded-xl border-[3px] border-ink bg-paper p-4"
+              class="scrap hover:rotate-0"
+              :class="i % 2 ? 'rotate-1' : '-rotate-1'"
             >
-              <div class="flex flex-wrap items-baseline justify-between gap-2">
-                <p class="font-semibold">{{ item.role }} · {{ item.org }}</p>
-                <p class="font-mono text-xs">{{ item.period }}</p>
+              <span
+                class="tape -top-3 left-6 -rotate-3"
+                :class="i % 2 ? 'tape-mint' : ''"
+              ></span>
+              <div
+                class="scrap-paper px-6 pb-5 pt-6"
+                :class="i % 2 ? 'torn-b' : 'torn-a'"
+              >
+                <div
+                  class="flex flex-wrap items-baseline justify-between gap-2"
+                >
+                  <p class="font-scribble text-xl font-bold">
+                    {{ item.role }} · {{ item.org }}
+                  </p>
+                  <p class="font-hand text-base text-pencil/70">
+                    {{ item.period }}
+                  </p>
+                </div>
+                <p class="mt-1 font-hand text-lg">{{ item.summary }}</p>
               </div>
-              <p class="mt-1 text-ink/80">{{ item.summary }}</p>
             </li>
             <li
               v-if="!profile.education.draft"
-              class="rounded-xl border-[3px] border-ink bg-paper p-4"
+              class="scrap rotate-1 hover:rotate-0"
             >
-              <div class="flex flex-wrap items-baseline justify-between gap-2">
-                <p class="font-semibold">
-                  {{ profile.education.degree }} ·
-                  {{ profile.education.school }}
-                </p>
-                <p class="font-mono text-xs">{{ profile.education.year }}</p>
+              <span class="tape tape-pink -top-3 left-6 -rotate-3"></span>
+              <div class="scrap-paper torn-b bg-kraft/60 px-6 pb-5 pt-6">
+                <div
+                  class="flex flex-wrap items-baseline justify-between gap-2"
+                >
+                  <p class="font-scribble text-xl font-bold">
+                    {{ profile.education.degree }} ·
+                    {{ profile.education.school }}
+                  </p>
+                  <p class="font-hand text-base text-pencil/70">
+                    {{ profile.education.year }}
+                  </p>
+                </div>
               </div>
             </li>
           </ol>
         </div>
       </div>
 
-      <div class="space-y-6">
+      <div class="space-y-10">
+        <!-- Instant photo, taped in at an angle -->
         <figure
-          class="mx-auto max-w-xs -rotate-1 rounded-sm border-[3px] border-ink bg-lemon p-3 shadow-hard transition-transform duration-200 hover:rotate-0 sm:p-4"
+          class="scrap mx-auto max-w-xs -rotate-2 bg-white p-3 pb-2 hover:rotate-0 sm:p-4 sm:pb-3"
         >
-          <div class="border-2 border-ink bg-white p-3 sm:p-4">
-            <img
-              :src="aboutImage"
-              alt="Saif giving a thumbs up at a museum exhibit"
-              class="aspect-[3/4] w-full border-2 border-ink object-cover"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
+          <span class="tape tape-pink -top-3 -left-5 -rotate-[30deg]"></span>
+          <span class="tape -right-5 -top-3 rotate-[30deg]"></span>
+          <img
+            :src="aboutImage"
+            alt="Saif giving a thumbs up at a museum exhibit"
+            class="aspect-[3/4] w-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption class="pt-2 text-center font-scribble text-xl">
+            museum day, thumbs up
+          </figcaption>
         </figure>
 
-        <h3 class="font-display text-xl font-extrabold">What I work with</h3>
-        <div
-          v-for="(group, i) in profile.skills"
-          :key="group.group"
-          class="rounded-2xl border-[3px] border-ink bg-paper p-5 shadow-hard-sm"
-        >
-          <p class="font-mono text-xs font-semibold uppercase tracking-widest">
-            {{ group.group }}
-          </p>
-          <ul class="mt-3 flex flex-wrap gap-2">
-            <li
-              v-for="skill in group.items"
-              :key="skill"
-              class="rounded-lg border-2 border-ink px-3 py-1 font-semibold"
-              :class="chipColors[i % chipColors.length]"
-            >
-              {{ skill }}
-            </li>
-          </ul>
+        <div class="space-y-8">
+          <h3 class="font-scribble text-3xl font-bold">
+            <span class="highlight">What I work with</span>
+          </h3>
+          <div
+            v-for="(group, i) in profile.skills"
+            :key="group.group"
+            class="scrap p-5 pt-6 hover:rotate-0"
+            :class="[
+              noteColors[i % noteColors.length],
+              i % 2 ? 'rotate-1' : '-rotate-1',
+            ]"
+          >
+            <span
+              class="tape -top-3 -rotate-3"
+              :class="i % 2 ? 'right-8' : 'left-8'"
+            ></span>
+            <p class="font-hand text-sm uppercase tracking-widest">
+              {{ group.group }}
+            </p>
+            <ul class="mt-3 flex flex-wrap gap-2">
+              <li v-for="skill in group.items" :key="skill" class="tag">
+                {{ skill }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

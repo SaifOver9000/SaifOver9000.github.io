@@ -42,7 +42,7 @@ const developing = ref(false);
         <div class="scrap max-w-xl -rotate-1 hover:rotate-0 sm:ml-8">
           <span class="tape -top-3 left-1/2 -translate-x-1/2 rotate-2"></span>
           <p
-            class="scrap-paper lined torn-b py-6 pl-14 pr-6 font-hand text-xl sm:text-2xl"
+            class="scrap-paper lined torn-b py-6 pl-14 pr-6 font-hand text-xl leading-8 sm:text-2xl"
           >
             {{ profile.tagline }}
           </p>

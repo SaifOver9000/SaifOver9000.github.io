@@ -4,14 +4,18 @@ import { computed } from "vue";
 const props = defineProps({
   project: { type: Object, required: true },
   featured: { type: Boolean, default: false },
+  // Position in the grid; used to alternate the tilt and torn edge.
+  index: { type: Number, default: 0 },
 });
 
 // Full class names so Tailwind can find them at build time.
+// Each accent is a sheet of coloured paper pasted onto the top of the card,
+// with matching tape and tags.
 const accents = {
-  pink: { band: "bg-pink text-ink", chip: "bg-pink/20" },
-  lemon: { band: "bg-lemon text-ink", chip: "bg-lemon/40" },
-  mint: { band: "bg-mint text-ink", chip: "bg-mint/30" },
-  cobalt: { band: "bg-cobalt text-white", chip: "bg-cobalt/15" },
+  pink: { band: "bg-pink/25", tape: "tape-pink", tag: "tag-pink" },
+  lemon: { band: "bg-lemon/70", tape: "tape-lemon", tag: "tag-lemon" },
+  mint: { band: "bg-mint/45", tape: "tape-mint", tag: "tag-mint" },
+  cobalt: { band: "bg-cobalt/15", tape: "tape-cobalt", tag: "tag-cobalt" },
 };
 const statuses = {
   live: { label: "Live", dot: "bg-mint" },
@@ -28,93 +32,113 @@ const links = computed(() =>
     { label: "Case study", href: props.project.links?.caseStudy },
   ].filter((l) => l.href),
 );
+
+const odd = computed(() => props.index % 2 === 1);
+const tilt = computed(() => {
+  if (props.featured) return "-rotate-[0.6deg]";
+  return odd.value ? "rotate-1" : "-rotate-1";
+});
+const torn = computed(() => (odd.value ? "torn-b" : "torn-a"));
 </script>
 
 <template>
-  <article
-    class="flex h-full flex-col overflow-hidden rounded-2xl border-[3px] border-ink bg-white shadow-hard"
-    :class="featured ? 'lg:flex-row' : ''"
-  >
+  <article class="scrap h-full hover:rotate-0" :class="tilt">
+    <span class="tape -top-3 left-8 -rotate-6" :class="accent.tape"></span>
+    <span
+      v-if="featured"
+      class="tape -top-2 right-10 rotate-3"
+      :class="accent.tape"
+    ></span>
+
     <div
-      class="flex flex-col justify-between gap-6 border-b-[3px] border-ink p-6"
-      :class="[
-        accent.band,
-        featured ? 'lg:w-2/5 lg:border-b-0 lg:border-r-[3px] lg:p-8' : '',
-      ]"
+      class="scrap-paper flex h-full flex-col"
+      :class="[torn, featured ? 'lg:flex-row' : '']"
     >
-      <div>
-        <p
-          class="font-mono text-xs font-semibold uppercase tracking-widest opacity-80"
-        >
-          {{ project.kicker }}
-        </p>
-        <h3
-          class="mt-2 font-display font-extrabold leading-tight"
-          :class="featured ? 'text-3xl sm:text-4xl' : 'text-2xl'"
-        >
-          {{ project.title }}
-        </h3>
-      </div>
-      <span
-        class="inline-flex w-fit items-center gap-2 rounded-full border-2 border-ink bg-white px-3 py-1 font-mono text-xs font-semibold text-ink"
+      <!-- Coloured paper pasted on top: kicker, title and status -->
+      <div
+        class="flex flex-col justify-between gap-6 border-b-2 border-dashed border-pencil/25 p-6 pt-7"
+        :class="[
+          accent.band,
+          featured ? 'lg:w-2/5 lg:border-b-0 lg:border-r-2 lg:p-8' : '',
+        ]"
       >
+        <div>
+          <p class="font-hand text-sm uppercase tracking-widest text-pencil/70">
+            {{ project.kicker }}
+          </p>
+          <h3
+            class="mt-2 font-scribble font-bold leading-tight"
+            :class="featured ? 'text-4xl sm:text-5xl' : 'text-3xl'"
+          >
+            {{ project.title }}
+          </h3>
+        </div>
         <span
-          class="h-2.5 w-2.5 rounded-full border border-ink"
-          :class="status.dot"
-        ></span>
-        {{ status.label
-        }}<template v-if="project.statusNote">
-          · {{ project.statusNote }}</template
-        >
-      </span>
-    </div>
-
-    <div
-      class="flex flex-1 flex-col gap-5 p-6"
-      :class="featured ? 'lg:p-8' : ''"
-    >
-      <p class="leading-relaxed" :class="featured ? 'text-lg' : ''">
-        {{ project.summary }}
-      </p>
-
-      <ul class="space-y-2">
-        <li
-          v-for="item in project.highlights"
-          :key="item"
-          class="flex gap-3 text-[15px] leading-snug"
+          class="wobbly inline-flex w-fit items-center gap-2 bg-white/80 px-3 py-0.5 font-hand text-base"
         >
           <span
-            aria-hidden="true"
-            class="mt-1.5 h-2 w-2 shrink-0 rotate-45 bg-ink"
+            class="h-2.5 w-2.5 rounded-full border border-pencil"
+            :class="status.dot"
           ></span>
-          <span>{{ item }}</span>
-        </li>
-      </ul>
+          {{ status.label
+          }}<template v-if="project.statusNote">
+            · {{ project.statusNote }}</template
+          >
+        </span>
+      </div>
 
-      <ul class="flex flex-wrap gap-2" aria-label="Tech stack">
-        <li
-          v-for="tech in project.stack"
-          :key="tech"
-          class="rounded-md border-2 border-ink px-2 py-0.5 font-mono text-xs font-semibold"
-          :class="accent.chip"
+      <div
+        class="flex flex-1 flex-col gap-5 p-6"
+        :class="featured ? 'lg:p-8' : ''"
+      >
+        <p
+          class="font-hand leading-relaxed"
+          :class="featured ? 'text-xl' : 'text-lg'"
         >
-          {{ tech }}
-        </li>
-      </ul>
+          {{ project.summary }}
+        </p>
 
-      <div class="mt-auto flex flex-wrap gap-3 pt-2">
-        <a
-          v-for="link in links"
-          :key="link.label"
-          :href="link.href"
-          target="_blank"
-          rel="noopener"
-          class="btn bg-paper px-4 py-2 text-sm shadow-hard-sm"
-          >{{ link.label }} ↗</a
-        >
-        <span v-if="!links.length" class="font-mono text-sm text-ink/60"
-          >Links coming soon</span
-        >
+        <ul class="space-y-2">
+          <li
+            v-for="item in project.highlights"
+            :key="item"
+            class="flex gap-3 font-hand text-lg leading-snug"
+          >
+            <span
+              aria-hidden="true"
+              class="shrink-0 font-scribble text-xl font-bold leading-none text-pink"
+              >✓</span
+            >
+            <span>{{ item }}</span>
+          </li>
+        </ul>
+
+        <ul class="flex flex-wrap gap-2" aria-label="Tech stack">
+          <li
+            v-for="tech in project.stack"
+            :key="tech"
+            class="tag"
+            :class="accent.tag"
+          >
+            {{ tech }}
+          </li>
+        </ul>
+
+        <div class="mt-auto flex flex-wrap gap-4 pt-2">
+          <a
+            v-for="(link, i) in links"
+            :key="link.label"
+            :href="link.href"
+            target="_blank"
+            rel="noopener"
+            class="paper-btn px-4 py-1 text-lg"
+            :class="i % 2 ? 'rotate-1 bg-white' : '-rotate-1 bg-lemon'"
+            >{{ link.label }} ↗</a
+          >
+          <span v-if="!links.length" class="font-hand text-lg text-pencil/60"
+            >Links coming soon</span
+          >
+        </div>
       </div>
     </div>
   </article>

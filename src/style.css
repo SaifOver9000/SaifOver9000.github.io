@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-/* Design tokens: cobalt, hot pink, lemon and mint blocks on a pale lilac page, outlined in ink with hard offset shadows. */
+/* Design tokens. The site is a paper collage: warm grainy sheet, scraps of
+   white and kraft paper with torn edges, masking tape, highlighter and
+   handwritten type. The bright accent colours are used as paper and tape. */
 @theme {
   --color-ink: #0e0e2c;
   --color-paper: #f3efff;
@@ -15,7 +17,7 @@
   --font-hand: "Patrick Hand", "Comic Sans MS", system-ui, sans-serif;
   --font-scribble: "Kalam", "Patrick Hand", cursive;
 
-  /* Paper-collage look (being trialled on the "new" branch) */
+  /* Paper-collage palette */
   --color-sheet: #f6f1e6;
   --color-kraft: #d8bf96;
   --color-pencil: #2a2833;
@@ -24,13 +26,26 @@
   --shadow-hard-sm: 3px 3px 0 0 var(--color-ink);
 }
 
+:root {
+  /* Faint paper grain, tiled */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .28 0 0 0 0 .18 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --torn-shadow: drop-shadow(0 1px 1px rgb(60 40 10 / 0.18))
+    drop-shadow(0 8px 10px rgb(60 40 10 / 0.12));
+  /* Hand-cut outline: no two corners alike */
+  --wobbly: 255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
 }
 
+/* The whole page is one big sheet of warm paper */
 body {
-  @apply bg-paper text-ink font-sans antialiased;
+  @apply bg-sheet text-pencil font-hand antialiased;
+  background-image: var(--grain);
+  /* Tilted scraps and tape poke past the edges; never let that cause a sideways scroll */
+  overflow-x: clip;
 }
 
 :focus-visible {
@@ -44,45 +59,26 @@ h3 {
   text-wrap: balance;
 }
 
-/* Chunky pressable button used across the site */
-.btn {
-  @apply inline-flex items-center gap-2 rounded-xl border-[3px] border-ink px-5 py-3 font-semibold text-ink shadow-hard transition-transform duration-150;
-}
-.btn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 8px 8px 0 0 var(--color-ink);
-}
-.btn:active {
-  transform: translate(3px, 3px);
-  box-shadow: 3px 3px 0 0 var(--color-ink);
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .btn,
-  .btn:hover,
-  .btn:active {
-    transition: none;
-    transform: none;
-  }
 }
 
-/* ---------- Paper collage look ---------- */
+/* ---------- Paper collage pieces ---------- */
 @layer components {
-  /* The big sheet everything is pasted onto: warm paper with a faint grain */
+  /* A sheet of warm paper with a faint grain (the body already has this;
+     use it on anything that needs its own sheet, e.g. a dropdown). */
   .paper-sheet {
     background-color: var(--color-sheet);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .28 0 0 0 0 .18 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-image: var(--grain);
     color: var(--color-pencil);
   }
 
   /* A cut-out piece. Shadow lives on the wrapper so the torn clip-path doesn't cut it off. */
   .scrap {
     position: relative;
-    filter: drop-shadow(0 1px 1px rgb(60 40 10 / 0.18))
-      drop-shadow(0 8px 10px rgb(60 40 10 / 0.12));
+    filter: var(--torn-shadow);
     transition: rotate 200ms ease;
   }
   .scrap-paper {
@@ -160,7 +156,8 @@ h3 {
     );
   }
 
-  /* Notebook paper: blue rules and a red margin */
+  /* Notebook paper: blue rules every 2rem and a red margin.
+     Pair with pt-6 and leading-8 so the writing sits on the lines. */
   .lined {
     background-color: #fffdf8;
     background-image:
@@ -175,6 +172,9 @@ h3 {
         transparent 0 calc(2rem - 1px),
         rgb(90 130 200 / 0.35) calc(2rem - 1px) 2rem
       );
+    background-position:
+      0 0,
+      0 0.9rem;
     line-height: 2rem;
   }
 
@@ -210,6 +210,47 @@ h3 {
   .tape-mint {
     background: rgb(90 220 170 / 0.6);
   }
+  .tape-lemon {
+    background: rgb(255 225 77 / 0.7);
+  }
+  .tape-cobalt {
+    background: rgb(120 140 255 / 0.5);
+  }
+
+  /* Small inline tape label, used for tech-stack tags and skill chips.
+     Torn ends are a fixed width so long labels don't get giant notches. */
+  .tag {
+    @apply inline-block px-3 py-0.5 font-hand text-base leading-snug text-pencil;
+    background: rgb(236 222 186 / 0.85);
+    clip-path: polygon(
+      4px 0,
+      calc(100% - 4px) 0,
+      100% 15%,
+      calc(100% - 3px) 30%,
+      100% 50%,
+      calc(100% - 3px) 70%,
+      100% 85%,
+      calc(100% - 4px) 100%,
+      4px 100%,
+      0 85%,
+      3px 70%,
+      0 50%,
+      3px 30%,
+      0 15%
+    );
+  }
+  .tag-pink {
+    background: rgb(255 120 180 / 0.45);
+  }
+  .tag-mint {
+    background: rgb(90 220 170 / 0.5);
+  }
+  .tag-lemon {
+    background: rgb(255 225 77 / 0.6);
+  }
+  .tag-cobalt {
+    background: rgb(120 140 255 / 0.35);
+  }
 
   /* Highlighter swipe behind a word */
   .highlight {
@@ -226,11 +267,17 @@ h3 {
     padding: 0 0.1em;
   }
 
+  /* Hand-drawn pencil outline (buttons, stamps) */
+  .wobbly {
+    border: 2px solid var(--color-pencil);
+    border-radius: var(--wobbly);
+  }
+
   /* Hand-cut paper button with a wobbly outline */
   .paper-btn {
     @apply inline-flex items-center gap-2 px-5 py-2 font-hand text-xl text-pencil;
     border: 2px solid var(--color-pencil);
-    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    border-radius: var(--wobbly);
     box-shadow: 2px 3px 0 rgb(60 40 10 / 0.25);
     transition:
       transform 150ms ease,

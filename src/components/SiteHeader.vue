@@ -4,6 +4,7 @@ import { profile } from "../data/profile.js";
 
 const open = ref(false);
 const nav = [
+  { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },

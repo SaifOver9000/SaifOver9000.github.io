@@ -1,6 +1,7 @@
 <script setup>
 import SiteHeader from "./components/SiteHeader.vue";
 import HeroSection from "./components/HeroSection.vue";
+import ExperienceSection from "./components/ExperienceSection.vue";
 import ProjectsSection from "./components/ProjectsSection.vue";
 import AboutSection from "./components/AboutSection.vue";
 import ContactSection from "./components/ContactSection.vue";
@@ -17,6 +18,7 @@ import SiteFooter from "./components/SiteFooter.vue";
   <SiteHeader />
   <main>
     <HeroSection />
+    <ExperienceSection />
     <ProjectsSection />
     <AboutSection />
     <ContactSection />

@@ -4,7 +4,7 @@
 export const profile = {
   name: "Saif",
   role: "Software Developer",
-  location: "Halifax, NS", // TODO: adjust as your plans change
+  location: "Toronto, ON", // TODO: adjust as your plans change
   tagline:
     "I build practical web apps and tools across the frontend and backend, and I like turning messy real-world problems into something people can actually use.",
 
@@ -57,6 +57,10 @@ export const profile = {
       ],
     },
     {
+      group: "Virtual Reality & Unity",
+      items: ["Unity", "Blender", "C#", "VR development"],
+    },
+    {
       group: "Community & Leadership",
       items: [
         "President of the Computer Science Society at Acadia University",
@@ -68,19 +72,31 @@ export const profile = {
   // Entries with draft: true are hidden until you fill them in and remove the flag.
   experience: [
     {
-      role: "Developer",
-      org: "Computational and Applied Neuroscience lab, University",
-      period: "2024 – 2026",
-      summary: "What you worked on and one result.",
-      draft: true,
+      role: "Software Developer (Research Assistant → Developer)",
+      org: "Computational and Applied Neuroscience Lab, Acadia University",
+      period: "Sep 2024 – Apr 2026",
+      summary:
+        "Started as a co-op research assistant and was rehired three times, ending as a part-time contract developer. Built and maintained VR motor learning experiments in Unity and C# that use eye tracking to study sensorimotor adaptation, including a new Mixed Reality experiment combining VR with real-world interaction. Fixed bugs affecting data collection accuracy, tested each release across sessions, and ran in-home trials with stroke patients.",
+      // Optional photos, served from /public. Leave out or empty for no photos.
+      images: [
+        {
+          src: "VR_Headset.jpg",
+          alt: "The lab's VR headset with its eye-tracking module",
+          caption: "the lab headset",
+        },
+        {
+          src: "MTL_Snapshot.jpg",
+          alt: "Unity editor open on the Ball Shooter VR experiment scene",
+          caption: "Ball Shooter in Unity",
+        },
+      ],
     },
     {
-      role: "Capstone Project", // TODO
-      org: "University, Program", // TODO
-      period: "2026", // TODO
+      role: "STEM Education Research Assistant (Co-op)",
+      org: "Acadia University",
+      period: "May 2024 – Jul 2024",
       summary:
-        "Engineered a machine learning system to predict peptide cytotoxicity (%) on breast cancer cells using an MLP regressor trained on 319 peptide sequences, achieving a mean R² of 0.51 (±0.10) via 10-fold cross-validation. Built a 38-dimensional feature engineering pipeline, with a FastAPI backend serving real-time predictions through a web interface.",
-      draft: true,
+        "Built a WordPress site to share research and connect a community of scholars, and supported qualitative research on the experiences of Black engineers in Canada, including a literature review. Helped run the pre-orientation for the STEM Leadership Academy Scholars program and built its participant survey in LimeSurvey.",
     },
   ],
 
@@ -88,6 +104,5 @@ export const profile = {
     degree: "Bachelor of Computer Science with Co-op",
     school: "Acadia University",
     year: "2026",
-    draft: true,
   },
 };

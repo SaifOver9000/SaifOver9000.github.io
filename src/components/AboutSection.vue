@@ -1,9 +1,7 @@
 <script setup>
-import { computed } from "vue";
 import { profile } from "../data/profile.js";
 import SectionHeading from "./SectionHeading.vue";
 
-const experience = computed(() => profile.experience.filter((e) => !e.draft));
 // Skill groups are sticky notes in rotating colours
 const noteColors = [
   "bg-lemon",
@@ -42,63 +40,6 @@ const aboutImage = `${import.meta.env.BASE_URL}Picture.jpg`;
               {{ para }}
             </p>
           </div>
-        </div>
-
-        <div
-          v-if="experience.length || !profile.education.draft"
-          class="space-y-6"
-        >
-          <h3 class="font-scribble text-3xl font-bold">
-            <span class="highlight">Experience & education</span>
-          </h3>
-          <ol class="space-y-6">
-            <li
-              v-for="(item, i) in experience"
-              :key="item.role + item.org"
-              class="scrap hover:rotate-0"
-              :class="i % 2 ? 'rotate-1' : '-rotate-1'"
-            >
-              <span
-                class="tape -top-3 left-6 -rotate-3"
-                :class="i % 2 ? 'tape-mint' : ''"
-              ></span>
-              <div
-                class="scrap-paper px-6 pb-5 pt-6"
-                :class="i % 2 ? 'torn-b' : 'torn-a'"
-              >
-                <div
-                  class="flex flex-wrap items-baseline justify-between gap-2"
-                >
-                  <p class="font-scribble text-xl font-bold">
-                    {{ item.role }} · {{ item.org }}
-                  </p>
-                  <p class="font-hand text-base text-pencil/70">
-                    {{ item.period }}
-                  </p>
-                </div>
-                <p class="mt-1 font-hand text-lg">{{ item.summary }}</p>
-              </div>
-            </li>
-            <li
-              v-if="!profile.education.draft"
-              class="scrap rotate-1 hover:rotate-0"
-            >
-              <span class="tape tape-pink -top-3 left-6 -rotate-3"></span>
-              <div class="scrap-paper torn-b bg-kraft/60 px-6 pb-5 pt-6">
-                <div
-                  class="flex flex-wrap items-baseline justify-between gap-2"
-                >
-                  <p class="font-scribble text-xl font-bold">
-                    {{ profile.education.degree }} ·
-                    {{ profile.education.school }}
-                  </p>
-                  <p class="font-hand text-base text-pencil/70">
-                    {{ profile.education.year }}
-                  </p>
-                </div>
-              </div>
-            </li>
-          </ol>
         </div>
       </div>
 
